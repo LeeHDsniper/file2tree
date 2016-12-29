@@ -4,16 +4,15 @@ import os.path
 import sys
 import getopt
 import platform
-
 def usage():
     print '[ * ] use like "python file2tree.py -r d:/tree"'
     print '[ * ] or use like "python file2tree.py --rootdir d:/tree"'
 
 
-def get_tree(cur_path):
+def get_tree(rootdir):
 	stack=[]
 	ret=[]
-	stack.append(cur_path)
+	stack.append(rootdir)
 	while len(stack)>0:
 		tmp=stack.pop(len(stack)-1)
 		if os.path.isdir(tmp):
@@ -43,7 +42,7 @@ def write_tree(rootdir):
 	file_tree=open(os.path.join(rootdir,"file2tree.txt"),"w")
 	path_list=get_tree(rootdir)
 	length=len(path_list)
-	#file_tree.write("â”œâ”€"+os.path.split(rootdir)[1]+"\n")
+	#file_tree.write("©À©¤"+os.path.split(rootdir)[1]+"\n")
 	for index in range(1,length):
 		tmp=path_list[index]
 		deepth=get_deepth(tmp)
@@ -51,21 +50,23 @@ def write_tree(rootdir):
 			tmp_next=path_list[index+1]
 			deepth_next=get_deepth(tmp_next)
 		else:
-			deepth_next=-1#â”‚
+			deepth_next=-1
 			
 		path_name=os.path.split(tmp)[1]
 		
 		if deepth_next==deepth or deepth_next>deepth:
 			space=""
 			for sp in range(0,deepth-1):
-				space+="â”‚  "
-			file_tree.write(space+"â”œâ”€"+path_name+"\n")
+				space+="©¦  "
+			line=space+"©À©¤"+path_name+"\n"
+			file_tree.write(line)
 	
 		elif deepth_next<deepth :
 			space=""
 			for sp in range(0,deepth-1):
-				space+="â”‚  "
-			file_tree.write(space+"â””â”€"+path_name+"\n")
+				space+="©¦  "
+			line=space+"©¸©¤"+path_name+"\n"
+			file_tree.write(line)
 		#print os.path.split(i)[1]
 	file_tree.close()
 	
